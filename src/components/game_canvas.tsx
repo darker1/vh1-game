@@ -7,10 +7,12 @@ import { LeftKeypressHandler } from "../handlers/LeftKeypressHandler";
 import { RightKeypressHandler } from "../handlers/RightKeypressHandler";
 import { UpKeypressHandler } from "../handlers/UpKeypressHandler";
 import { DownKeypressHandler } from "../handlers/DownKeypressHandler";
+import { Wall } from "../world_objects/wall";
+import { SpacebarKeypressHandler } from "../handlers/SpacebarKeypressHandler";
 export interface CanvasProps { text: string; }
 
 export class Canvas extends React.Component<CanvasProps, {}> {
-    readonly STEP: number = 5;
+    readonly STEP: number = 25;
 
     refs: {
         canvas: HTMLCanvasElement
@@ -33,20 +35,35 @@ export class Canvas extends React.Component<CanvasProps, {}> {
             }
         } as SpriteOptions;
         const pod: Sprite = new Sprite(podOptoins);
-        
+
+        const wallOptions = {
+            src: '../../assets/wall.jpg',
+            sprites: {
+                'normal': { x: 0, y: 0, w: 3, h: 3 }
+            }
+        } as SpriteOptions;
+        const wall1: Wall = new Wall(wallOptions);
+        const wall2: Wall = new Wall(wallOptions);
+
         document.addEventListener('keydown', (event) => {
             let loc: {x: number, y: number, which: string};
-            keyhandlers.HandleKeypress(event, {pod: pod, loc: loc, STEP: this.STEP, canvas: canvas});
+            keyhandlers.HandleKeypress(event, {pod: pod, loc: loc, wall1: wall1, wall2: wall2, STEP: this.STEP, canvas: canvas, ctx: ctx, redrawables: redrawables});
             this.redraw(canvas,ctx, redrawables);
         });
 
         let current: 'normal'|'danger' = 'normal';
         // render actions
         background.render()(ctx);
-        pod.render(current, 0, 0)(ctx);
+        pod.render(current, 0, 135)(ctx);
+        wall1.setEndCoords(canvas.width, 300);
+        wall1.render('normal', 0, 300, 6, 6)(ctx);
+        wall2.setEndCoords(canvas.width, 100)
+        wall2.render('normal', 0, 100, 6, 6)(ctx);
 
         redrawables.push(background);
         redrawables.push(pod);
+        redrawables.push(wall1);
+        redrawables.push(wall2);
         /*
         setInterval(() => {
             if(current === 'normal') {
@@ -60,13 +77,6 @@ export class Canvas extends React.Component<CanvasProps, {}> {
 
         }, 1000);
 */
-    let image = new Image();
-    image.onload = () => {
-        for(let i : number = 0; i < canvas.width; i++) {
-            ctx.drawImage(image, 0, 0, image.width, image.height, i,200,6,6);
-        }
-    };
-    image.src = '../assets/wall.jpg';
 
     }
 
@@ -74,7 +84,8 @@ export class Canvas extends React.Component<CanvasProps, {}> {
         return new LeftKeypressHandler(
             new RightKeypressHandler(
                 new DownKeypressHandler(
-                    new UpKeypressHandler())));
+                    new UpKeypressHandler(
+                        new SpacebarKeypressHandler()))));
     }
 
     redraw(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, redrawables: Redrawable[]) {

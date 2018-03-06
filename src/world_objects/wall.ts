@@ -4,6 +4,19 @@ export class Wall extends Sprite {
     private _startLocation: SpriteLocation;
     private _endLocation: SpriteLocation;
 
+    public setEndCoords(dx: number, dy: number, dh?: number, dw?: number) {
+        this._endLocation = {x: dx, y:dy, h: dh, w:dw};
+    }
+    public render(which: string, dx: number, dy: number, dh?: number, dw?: number): (ctx: CanvasRenderingContext2D) => void  {
+        if(!this._endLocation) {
+            throw new Error('Cannot call render on a wall without calling setEndCoords.');
+        }
+
+        this._startLocation  = {x: dx, y:dy, h: dh, w:dw}; 
+        this._state = {sprite: this._sprites[which], destination: null};
+        
+        return super.render(which, dx, dy, dw, dh);
+    }
     protected drawSprite(which: string, sprite: SpriteLocation, destination: SpriteLocation, ctx: CanvasRenderingContext2D) {
         const distance = Math.sqrt(Math.pow(this._startLocation.x - this._endLocation.x, 2) + Math.pow(this._startLocation.y - this._endLocation.y, 2));
         const loc: SpriteLocation = { x: this._startLocation.x, y: this._startLocation.y, w: this._startLocation.w, h: this._startLocation.h };
@@ -11,7 +24,10 @@ export class Wall extends Sprite {
         const slope = (this._startLocation.y - this._endLocation.y)/(this._startLocation.x - this._endLocation.x);
 
         for (let i = 0; i < distance; i++) {
-            
+            //step along the line via the 
+            loc.x = loc.x + 1;
+            loc.y = loc.y + slope;
+
             super.drawSprite(which, sprite, loc, ctx);
         }
     }

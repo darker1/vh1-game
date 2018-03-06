@@ -5,7 +5,7 @@ export class UpKeypressHandler extends KeypressEventHandler {
         if (event.keyCode === 38) {
             console.log('Up Pressed');
             objs.loc = objs.pod.getCurrentCoords();
-            if (objs.loc.y + objs.STEP > 0) {
+            if (objs.loc.y - objs.STEP > 0) {
                 objs.loc.y = objs.loc.y - objs.STEP;
             } else {
                 //TODO: replace with var

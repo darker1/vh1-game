@@ -5,7 +5,7 @@ export class DownKeypressHandler extends KeypressEventHandler {
         if (event.keyCode === 40) {
             console.log('Down Pressed');
             objs.loc = objs.pod.getCurrentCoords();
-            if(objs.loc.y - objs.STEP < objs.canvas.height) {
+            if(objs.loc.y + 93 + objs.STEP < objs.canvas.height) {
                 objs.loc.y = objs.loc.y + objs.STEP;
             } else {
                 //TODO: replace with var

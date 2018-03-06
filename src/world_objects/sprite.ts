@@ -13,9 +13,9 @@ export class Sprite implements Redrawable {
     private _image: HTMLImageElement;
     private _imageLoaded: boolean;
 
-    private _sprites: { [key: string]: SpriteLocation };
+    protected _sprites: { [key: string]: SpriteLocation };
 
-    private _state?: { sprite: SpriteLocation, destination: SpriteLocation };
+    protected _state?: { sprite: SpriteLocation, destination: SpriteLocation };
     private _currentLocation?: SpriteLocation;
     private _currentSprite: {which: string, sprite: SpriteLocation};
 
@@ -35,11 +35,13 @@ export class Sprite implements Redrawable {
 
                     const values = this.prepareLocations(which, dx, dy, dw, dh);
                     this.drawSprite(which, values.sprite, values.destination, ctx);
+                    this._state = values;
                     this._rendered = true;
                 }
                 return;
             }
             const values = this.prepareLocations(which, dx, dy, dw, dh);
+            this._state = values;
             this.drawSprite(which, values.sprite, values.destination, ctx);
             this._rendered = true;
         }

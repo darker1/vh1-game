@@ -5,7 +5,7 @@ export class RightKeypressHandler extends KeypressEventHandler {
         if (event.keyCode === 39) {
             console.log('Right Pressed');
             objs.loc = objs.pod.getCurrentCoords();
-            if (objs.loc.x + objs.STEP < objs.canvas.width) {
+            if (objs.loc.x + 269 + objs.STEP < objs.canvas.width) {
                 objs.loc.x = objs.loc.x + objs.STEP;
             } else {
                 //TODO: replace with var
