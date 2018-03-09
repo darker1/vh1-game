@@ -52,6 +52,10 @@ export class Sprite implements Redrawable {
             console.log(`Sprite ${which} has not been rendered yet, but UPDATE was called.`);
             return;
         }
+
+        dw = dw | this._currentLocation.w;
+        dh = dh | this._currentLocation.h;
+
         this._state = this.prepareLocations(which, dx, dy, dw, dh);   
         this._currentLocation = this._state.destination;
         this._currentSprite = {which: which, sprite: this._state.sprite};

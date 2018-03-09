@@ -18,15 +18,14 @@ export class Wall extends Sprite {
         return super.render(which, dx, dy, dw, dh);
     }
     protected drawSprite(which: string, sprite: SpriteLocation, destination: SpriteLocation, ctx: CanvasRenderingContext2D) {
-        const distance = Math.sqrt(Math.pow(this._startLocation.x - this._endLocation.x, 2) + Math.pow(this._startLocation.y - this._endLocation.y, 2));
         const loc: SpriteLocation = { x: this._startLocation.x, y: this._startLocation.y, w: this._startLocation.w, h: this._startLocation.h };
-        
-        const slope = (this._startLocation.y - this._endLocation.y)/(this._startLocation.x - this._endLocation.x);
-
+        const distance: number = this._endLocation.x - this._startLocation.x;
+        const height: number = Math.abs(this._startLocation.y - this._endLocation.y);
+        const startY = loc.y;
         for (let i = 0; i < distance; i++) {
             //step along the line via the 
             loc.x = loc.x + 1;
-            loc.y = loc.y + slope;
+            loc.y = (startY-height) + ( height * Math.cos((Math.PI * i)/(distance)));
 
             super.drawSprite(which, sprite, loc, ctx);
         }

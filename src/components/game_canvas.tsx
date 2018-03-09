@@ -24,11 +24,11 @@ export class Canvas extends React.Component<CanvasProps, {}> {
         const ctx = canvas.getContext("2d");
         const keyhandlers : IKeypressEventHandler = this.initHandlers();
 
-        const bkgdSource = 'https://www.theplace2.ru/archive/kate_bock/img/kate_bock_si_swimsuit_2016_7.jpg';
+        const bkgdSource = 'https://static.pexels.com/photos/414171/pexels-photo-414171.jpeg';
         const background: Background = new Background(bkgdSource, canvas.width, canvas.height);
         
         const podOptoins = {
-            src: '../../assets/pod.png',
+            src: '../../assets/pod_virgin.png',
             sprites: {
                 'normal': { x: 0, y: 0, w: 269, h: 93 },
                 'danger': { x: 0, y: 93, w: 269, h: 93 }
@@ -54,7 +54,7 @@ export class Canvas extends React.Component<CanvasProps, {}> {
         let current: 'normal'|'danger' = 'normal';
         // render actions
         background.render()(ctx);
-        pod.render(current, 0, 135)(ctx);
+        pod.render(current, 0, 135, 86.7, 30)(ctx);
         wall1.setEndCoords(canvas.width, 300);
         wall1.render('normal', 0, 300, 6, 6)(ctx);
         wall2.setEndCoords(canvas.width, 100)
