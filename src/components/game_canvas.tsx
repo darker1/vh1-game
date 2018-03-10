@@ -9,6 +9,8 @@ import { UpKeypressHandler } from "../handlers/UpKeypressHandler";
 import { DownKeypressHandler } from "../handlers/DownKeypressHandler";
 import { Wall } from "../world_objects/wall";
 import { SpacebarKeypressHandler } from "../handlers/SpacebarKeypressHandler";
+import { World } from "../world_objects/world";
+
 export interface CanvasProps { text: string; }
 
 export class Canvas extends React.Component<CanvasProps, {}> {
@@ -77,7 +79,8 @@ export class Canvas extends React.Component<CanvasProps, {}> {
 
         }, 1000);
 */
-
+        const world = new World(100000, 10000);
+        world.generateHills(10);
     }
 
     initHandlers(): IKeypressEventHandler {
