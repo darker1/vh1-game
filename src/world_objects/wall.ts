@@ -22,8 +22,9 @@ export class Wall extends Sprite {
         const distance: number = this._endLocation.x - this._startLocation.x;
         const height: number = Math.abs(this._startLocation.y - this._endLocation.y);
         const startY = loc.y;
+        
         for (let i = 0; i < distance; i++) {
-            //step along the line via the 
+            
             loc.x = loc.x + 1;
             loc.y = (startY-height) + ( height * Math.cos((Math.PI * i)/(distance)));
 
