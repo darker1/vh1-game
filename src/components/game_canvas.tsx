@@ -45,31 +45,28 @@ export class Canvas extends React.Component<CanvasProps, {}> {
                 'normal': { x: 0, y: 0, w: 3, h: 3 }
             }
         } as SpriteOptions;
-        const wall1: Wall = new Wall(wallOptions);
-        const wall2: Wall = new Wall(wallOptions);
         const tube: Tube = new Tube(wallOptions, 200);
 
+        //background.render()(ctx);
+
+        const world = new World(10000, 1000);
+        world.generateHillPoints(10);
+        world.generateLargeCanvas(canvas);
+/*
         document.addEventListener('keydown', (event) => {
             let loc: {x: number, y: number, which: string};
-            keyhandlers.HandleKeypress(event, {pod: pod, loc: loc, wall1: wall1, wall2: wall2, STEP: this.STEP, canvas: canvas, ctx: ctx, redrawables: redrawables});
+            keyhandlers.HandleKeypress(event, {pod: pod, loc: loc, STEP: this.STEP, canvas: canvas, ctx: ctx, redrawables: redrawables});
             this.redraw(canvas,ctx, redrawables);
         });
 
         let current: 'normal'|'danger' = 'normal';
         // render actions
-        background.render()(ctx);
+        
         pod.render(current, 0, 135, 86.7, 30)(ctx);
-        /*wall1.setEndCoords(canvas.width, 300);
-        wall1.render('normal', 0, 300, 6, 6)(ctx);
-        wall2.setEndCoords(canvas.width, 100)
-        wall2.render('normal', 0, 100, 6, 6)(ctx);
-*/
         tube.renderTube(canvas.width, 200, 'normal', 0,200,6,6)(ctx);
 
         redrawables.push(background);
         redrawables.push(pod);
-        //redrawables.push(wall1);
-        //redrawables.push(wall2);
         redrawables.push(tube);
         /*
         setInterval(() => {
@@ -84,8 +81,7 @@ export class Canvas extends React.Component<CanvasProps, {}> {
 
         }, 1000);
 */
-        const world = new World(100000, 10000);
-        world.generateHillPoints(10);
+
     }
 
     initHandlers(): IKeypressEventHandler {
@@ -110,7 +106,7 @@ export class Canvas extends React.Component<CanvasProps, {}> {
     render() {
         return (
             <div>
-                <canvas ref="canvas" width={640} height={425} />
+                <canvas ref="canvas" width={10000} height={1000} />
             </div>
         )
     }
