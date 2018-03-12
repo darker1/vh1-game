@@ -8,6 +8,7 @@ import { RightKeypressHandler } from "../handlers/RightKeypressHandler";
 import { UpKeypressHandler } from "../handlers/UpKeypressHandler";
 import { DownKeypressHandler } from "../handlers/DownKeypressHandler";
 import { Wall } from "../world_objects/wall";
+import { Tube } from "../world_objects/tube";
 import { SpacebarKeypressHandler } from "../handlers/SpacebarKeypressHandler";
 import { World } from "../world_objects/world";
 
@@ -46,6 +47,7 @@ export class Canvas extends React.Component<CanvasProps, {}> {
         } as SpriteOptions;
         const wall1: Wall = new Wall(wallOptions);
         const wall2: Wall = new Wall(wallOptions);
+        const tube: Tube = new Tube(wallOptions, 200);
 
         document.addEventListener('keydown', (event) => {
             let loc: {x: number, y: number, which: string};
@@ -57,15 +59,18 @@ export class Canvas extends React.Component<CanvasProps, {}> {
         // render actions
         background.render()(ctx);
         pod.render(current, 0, 135, 86.7, 30)(ctx);
-        wall1.setEndCoords(canvas.width, 300);
+        /*wall1.setEndCoords(canvas.width, 300);
         wall1.render('normal', 0, 300, 6, 6)(ctx);
         wall2.setEndCoords(canvas.width, 100)
         wall2.render('normal', 0, 100, 6, 6)(ctx);
+*/
+        tube.renderTube(canvas.width, 200, 'normal', 0,200,6,6)(ctx);
 
         redrawables.push(background);
         redrawables.push(pod);
-        redrawables.push(wall1);
-        redrawables.push(wall2);
+        //redrawables.push(wall1);
+        //redrawables.push(wall2);
+        redrawables.push(tube);
         /*
         setInterval(() => {
             if(current === 'normal') {
@@ -93,7 +98,9 @@ export class Canvas extends React.Component<CanvasProps, {}> {
 
     redraw(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D, redrawables: Redrawable[]) {
         ctx.clearRect(0,0,canvas.width, canvas.height);
-        redrawables.forEach((v,i,arr) => v.redraw()(ctx));
+        redrawables.forEach((v,i,arr) => {
+            v.redraw()(ctx);
+        });
     }
 
     generateTube(length: number, height: number, startY: number) {

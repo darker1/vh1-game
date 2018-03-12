@@ -7,7 +7,8 @@ export class Wall extends Sprite {
     public setEndCoords(dx: number, dy: number, dh?: number, dw?: number) {
         this._endLocation = {x: dx, y:dy, h: dh, w:dw};
     }
-    public render(which: string, dx: number, dy: number, dh?: number, dw?: number): (ctx: CanvasRenderingContext2D) => void  {
+
+    public render(which: string, dx: number, dy: number, dh?: number, dw?: number): (ctx: CanvasRenderingContext2D) => void  {  
         if(!this._endLocation) {
             throw new Error('Cannot call render on a wall without calling setEndCoords.');
         }
@@ -22,7 +23,6 @@ export class Wall extends Sprite {
         const distance: number = this._endLocation.x - this._startLocation.x;
         const height: number = Math.abs(this._startLocation.y - this._endLocation.y);
         const startY = loc.y;
-        
         for (let i = 0; i < distance; i++) {
             
             loc.x = loc.x + 1;
