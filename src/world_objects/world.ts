@@ -3,7 +3,7 @@ export class World {
   public constructor(public width: number, public height: number) {
   }
 
-  public generateHills(n: number): {x: number, y:number}[] {
+  public generateHillPoints(n: number): {x: number, y:number}[] {
     // each hill is 2 - 3 inflection points.  
     // the highest we can go is height / 2
     const inflectionPoints: {x: number, y:number}[] = [{x: 0, y: this.height/2}];
@@ -20,7 +20,7 @@ export class World {
       const endOfSection = currentX + sections;
 
       // figure out how far ahead to set the first pont
-      currentX = currentX + sections * .6 * Math.random();
+      currentX = currentX + Math.floor(sections * .6 * Math.random());
       inflectionPoints.push({x:currentX, y: currentY});
 
       for (let i = 0; i < numPoints; i++) {
@@ -31,7 +31,7 @@ export class World {
         inflectionPoints.push({x: currentX, y: currentY});
       }
     }
-    inflectionPoints.push({x: this.width, y: currentY});
+    inflectionPoints.push({x: this.width, y: currentY}); 
     console.log(inflectionPoints);
     return inflectionPoints;
   }

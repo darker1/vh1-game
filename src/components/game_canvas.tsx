@@ -80,7 +80,7 @@ export class Canvas extends React.Component<CanvasProps, {}> {
         }, 1000);
 */
         const world = new World(100000, 10000);
-        world.generateHills(10);
+        world.generateHillPoints(10);
     }
 
     initHandlers(): IKeypressEventHandler {
